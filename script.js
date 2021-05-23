@@ -47,13 +47,34 @@ const cLabel = document.getElementById('c-label');
 const dLabel = document.getElementById('d-label');
 const question = document.getElementById('question');
 const nextBtn = document.getElementsByClassName('next-btn')[0];
+const timer = document.getElementById('timer');
+const score = document.getElementById('score');
+
 let currentQuestion = 0;
-let score = 0;
 let currentData = quizData[currentQuestion];
+//:TO-DO: 
+//1.Load new question after every 10 seconds
+//2.Record on which second answer is clicked
+//3.Add that time to main score
+
+let temproryScore = 0;
+let finalScore = 0;
 
 //load quiz
 function loadQuiz(){
+ 
+   score.innerText = finalScore; 
+   temproryScore = 0;
+   let count = 10;
+   const reduceTimer = () => {
+    timer.innerText = count;
+    temproryScore = count*1000;
+    count--;
+    if(count == 0) clearInterval(seconds);
+   }
+   reduceTimer();
 
+  var seconds = setInterval(reduceTimer , 1000);
 
 question.innerText = currentData.question;
 aLabel.innerText = currentData.a;
@@ -64,38 +85,25 @@ dLabel.innerText = currentData.d;
 const btnsEls = document.querySelectorAll('.radio-btn');
  btnsEls.forEach(btnsEl => btnsEl.checked = false);
 
-} 
+ currentQuestion++;
+ if(currentQuestion !== quizData.length)
+   currentData = quizData[currentQuestion];
+
+ if(currentQuestion == quizData.length){
+    clearInterval(quiz);
+    timer.style.display = 'none';
+}
+}
 
 loadQuiz();
+var quiz = setInterval(loadQuiz , 10000);
 
-//onclick next
 
-nextBtn.addEventListener('click',()=>{
-    
-    checkAnswer(); // check the answer before procedding
-
-    if(currentQuestion == quizData.length)
-    {
-        console.log(score);
-       return alert("Quiz Finished");
+function handleChange(answer){
+console.log(quizData[currentQuestion-1]);
+   if(answer === quizData[currentQuestion-1].correct) 
+        finalScore = (finalScore + temproryScore);
+        if(currentQuestion === quizData.length)
+            score.innerText = finalScore;
     }
-     currentData = quizData[currentQuestion];
-    loadQuiz();
-});
 
-
-//check for answer 
-function checkAnswer() {
-    const btnsEls = document.querySelectorAll('.radio-btn');
-    let flag=false;
-  
- btnsEls.forEach(btnsEl => {
-       if(btnsEl.checked) flag=true;
-       if(btnsEl.checked && btnsEl.id == currentData.correct){
-        score++;
-        console.log("correct");
-    }  
-});
-if(!flag) return alert("Slect one option for next question");
-currentQuestion++;
-}

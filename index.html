@@ -10,14 +10,21 @@
 </head>
 
 <body>
+    <div id="timer">
+        10
+    </div>
+
+    <div id="score">
+        0
+    </div>
     <div class="quiz-container">
         <div class="quiz-header">
             <h4 id="question">Question</h4>
             <ul class="options">
-                <li><input type="radio" id="a" class="radio-btn" name="answer"><label for="a" id="a-label">Answer</label></li>
-                <li><input type="radio" id="b" class="radio-btn" name="answer"><label for="b" id="b-label">Answer</label></li>
-                <li><input type="radio" id="c" class="radio-btn" name="answer"><label for="c" id="c-label">Answer</label></li>
-                <li><input type="radio" id="d" class="radio-btn" name="answer"><label for="d" id="d-label">Answer</label></li>
+                <li><input type="radio" onchange="handleChange('a')" id="a" class="radio-btn" name="answer"><label for="a" id="a-label">Answer</label></li>
+                <li><input type="radio" onchange="handleChange('b')" id="b" class="radio-btn" name="answer"><label for="b" id="b-label">Answer</label></li>
+                <li><input type="radio" onchange="handleChange('c')" id="c" class="radio-btn" name="answer"><label for="c" id="c-label">Answer</label></li>
+                <li><input type="radio" onchange="handleChange('d')" id="d" class="radio-btn" name="answer"><label for="d" id="d-label">Answer</label></li>
             </ul>
         </div>
         <button class="next-btn">
